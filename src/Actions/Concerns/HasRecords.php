@@ -2,6 +2,7 @@
 
 namespace AlperenErsoy\FilamentExport\Actions\Concerns;
 
+use AlperenErsoy\FilamentExport\Concerns\CanCustomQuery;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
@@ -15,6 +16,10 @@ trait HasRecords
 
         $model = $this->getTable()->getModel();
         $query = $model::query();
+
+        if ($livewire instanceof CanCustomQuery) {
+            $query = $livewire->getQueryExport();
+        }
 
         $filterData = $livewire->tableFilters;
 
